@@ -6,6 +6,7 @@ import Update from "./container/Update";
 import Read from "./container/Read";
 import { Button } from "semantic-ui-react";
 import PostComment from "./container/PostComment";
+import PostComment2 from "./container/PostComment2";
 
 const App = () => {
 
@@ -25,7 +26,7 @@ const App = () => {
                     <Route path="/" element={<Create />} />
                     <Route path='/read' element={<Read />} />
                     <Route path='/update' element={<Update />} />
-                    <Route path='/comments/:id' element={<PostComment />} />
+                    <Route path='/comments/:id' element={<PostComment2 />} />
                 </Routes>
             </BrowserRouter>
         </div>

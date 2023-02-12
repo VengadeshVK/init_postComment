@@ -13,26 +13,43 @@ const Comment = ({ id, data, updateData, deleteData }) => {
   const[listOfCommments,setListOfComments]=useState([])
   const navigator = useNavigate();
 
-  const displayComment = async () => {
-    await axios.get(ApiData+id).then((response) => {
-      // console.log("Comment id in display comment:",ApiData,id)
-      // setListOfComments([...listOfCommments, response.data])
-      setListOfComments([response.data])
-      localStorage.setItem('id',id)
-      console.log("In displayComment-listOfComments",listOfCommments)
+  // const displayComment = async () => {
+  //   await axios.get(commentId+id+'/comment').then((response) => {
+  //     // console.log("Comment id in display comment:",ApiData,id)
+  //     // setListOfComments([...listOfCommments, response.data])
+  //     setListOfComments([response.data])
+  //     localStorage.setItem('id',id)
+  //     // localStorage.setItem('comment',newComment)
+  //     console.log("In displayComment-listOfComments",listOfCommments)
+  //   })
+  // }
+  // useEffect(() => {
+  //   // displayComment()
+  //   setCommentId(localStorage.getItem('id'))
+  // }, []);
+
+  const[commentApiResponse,setCommentApiResponse]=useState([])
+  const[postId,setPostId]=useState()
+  const displayComment=async()=>{
+    await axios.get(commentApiData+id+'/comment').then((response)=>{
+      setCommentApiResponse(response.data)
+      localStorage.setItem('postId',id)
+      console.log("displayComment :",response.data)
     })
   }
-  useEffect(() => {
+  useEffect(()=>{
     displayComment()
-    setCommentId(localStorage.getItem('id'))
-  }, []);
+  },[])
 
   const toggleComment=()=>{
+    // console.log("commentData id",commentApiResponse)
     setShowComment(!showComment)
+    setPostId(localStorage.getItem('postId'))
+    console.log("Post id",postId)
   }
 
   const deleteComment=async(id)=>{
-    await axios.delete(ApiData+id);
+    await axios.delete(commentApiData+postId+'/comment/'+id);
     console.log("delete commentApiData",id)
     displayComment();
 }
@@ -56,7 +73,7 @@ const addComment = (id) => {
          <br /><br />
           {showComment ?
             <Card.Group className="AlignCenter">
-              {listOfCommments.map(index => (
+              {commentApiResponse.map(index => (
                 <Card fluid key={id}  >
                   <Card.Content >
                     <Card.Header className='commentText' >{index.newComment}</Card.Header><br/>

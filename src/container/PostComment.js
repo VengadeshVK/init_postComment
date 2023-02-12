@@ -19,17 +19,20 @@ const PostComment = () => {
         // setPostId(localStorage.getItem('id'))
         setCommentList([...dbComment,newComment])
         console.log("new comment",commentsList,dbComment)
-        
-        console.log("postId",postId)
-        navigator('/read')
-    }
-    useEffect(()=>{
-         axios.put(ApiData+postId,{
+        axios.put(ApiData+postId,{
             // await axios.post(ApiData,{
                 commentsList
             })
-            console.log("Effect :",commentsList,dbComment)
-    },[commentsList])
+        console.log("postId",postId)
+        navigator('/read')
+    }
+    // useEffect(()=>{
+    //      axios.put(ApiData+postId,{
+    //         // await axios.post(ApiData,{
+    //             commentsList
+    //         })
+    //         console.log("Effect :",commentsList,dbComment)
+    // },[commentsList])
     useEffect(()=>{
         setPostId(localStorage.getItem('id'))
     },[])
